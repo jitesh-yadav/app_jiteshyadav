@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git url: 'https://github.com/jitesh-yadav/app_jiteshyadav_nagp_devops.git'
+                checkout scm
                 bat 'mvn clean install'
             }
         }
