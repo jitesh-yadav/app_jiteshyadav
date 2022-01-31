@@ -1,49 +1,45 @@
 pipeline {
     agent any
-    
-    tools {
-        maven 'Maven3'
-    }
 
     environment {
-        mvn = tool name: 'Maven3'
-        username = 'jiteshyadav'
+        mvn = tool name: "Maven3"
+        username = "jiteshyadav"
     }
 
     options {
         timestamps()
-        timeout(time: 1, unit: 'HOURS')
+        timeout(time: 1, unit: "HOURS")
         skipDefaultCheckout true
-        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '10', numToKeepStr: '5')
+        buildDiscarder logRotator(artifactDaysToKeepStr: "", artifactNumToKeepStr: "", daysToKeepStr: "10", numToKeepStr: "5")
     }
 
     stages {
-        stage('Build') {
+        stage("Build") {
             steps {
-                echo 'Checkout Source Repo..'
+                echo "Checkout Source Repo.."
                 checkout scm
 
-                echo 'Start Build..'
-                bat 'mvn clean verify'
+                echo "Start Build.."
+                bat "${mvn}/bin/mvn clean verify"
             }
         }
-        stage('Sonarqube Analysis') {
+        stage("Sonarqube Analysis") {
             steps {
-                echo 'Start Sonarqube Analysis..'
+                echo "Start Sonarqube Analysis.."
                 withSonarQubeEnv("SonarQubeScanner") {
                     bat "${mvn}/bin/mvn sonar:sonar -Dsonar.projectKey=sonar-${username} -Dsonar.projectName=sonar-${username}"
                 }
 
                 // Wait for results and set pipeline status accordingly
-                echo 'Checking Sonar Results..'
-                timeout(time: 5, unit: 'MINUTES') {
+                echo "Checking Sonar Results.."
+                timeout(time: 5, unit: "MINUTES") {
                     waitForQualityGate abortPipeline: true
                 }
             }
         }
-        stage('Kubernetes Deployment') {
+        stage("Kubernetes Deployment") {
             steps {
-                echo 'Deploy pending..'
+                echo "Deploy pending.."
             }
         }
     }
