@@ -35,6 +35,7 @@ pipeline {
                 }
 
                 // Wait for results and set pipeline status accordingly
+                echo 'Checking Sonar Results..'
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
