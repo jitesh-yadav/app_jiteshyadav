@@ -192,6 +192,6 @@
 				<directory>src/main/webapp</directory>
 			</testResource>
 		</testResources>
-		<finalName>devopssampleapplication</finalName>
+		<finalName>app-jiteshyadav</finalName>
 	</build>
 </project>
