@@ -26,7 +26,7 @@ pipeline {
         stage("Sonarqube Analysis") {
             steps {
                 echo "Start Sonarqube Analysis.."
-                withSonarQubeEnv("SonarQubeScanner") {
+                withSonarQubeEnv("Test_Sonar") {
                     bat "${mvn}/bin/mvn sonar:sonar -Dsonar.projectKey=sonar-${username} -Dsonar.projectName=sonar-${username}"
                 }
 
