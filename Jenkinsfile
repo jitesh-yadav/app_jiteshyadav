@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven3'
+    }
+
     options {
         timestamps()
         timeout(time: 1, unit: 'HOURS')
@@ -8,13 +12,6 @@ pipeline {
     }
 
     stages {
-        stage('Prepare Environment') {
-            steps {
-                tools {
-                    maven 'Maven3'
-                }
-            }
-        }
         stage('Checkout code') {
             steps {
                 git url: 'https://github.com/jitesh-yadav/app_jiteshyadav_nagp_devops.git'
