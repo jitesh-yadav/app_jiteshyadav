@@ -12,19 +12,20 @@ pipeline {
     }
 
     stages {
-        stage('Checkout code') {
-            steps {
-                git url: 'https://github.com/jitesh-yadav/app_jiteshyadav_nagp_devops.git'
-            }
-        }
         stage('Build') {
             steps {
+                git url: 'https://github.com/jitesh-yadav/app_jiteshyadav_nagp_devops.git'
                 bat 'mvn clean install'
             }
         }
-        stage('Test') {
+        stage('Test Case Execution') {
             steps {
                 bat 'mvn test'
+            }
+        }
+        stage('Kubernetes Deployment') {
+            steps {
+                echo 'Deploy pending..'
             }
         }
     }
