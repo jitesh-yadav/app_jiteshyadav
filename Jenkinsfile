@@ -40,7 +40,7 @@ pipeline {
         stage("Kubernetes Deployment") {
             steps {
                 echo "Building Docker Image.."
-                def imageName = "i-${username}-${BRANCH_NAME}:${BUILD_NUMBER}"
+                imageName = "i-${username}-${BRANCH_NAME}:${BUILD_NUMBER}"
                 bat "docker build -t ${imageName} ."
 
                 echo "Puching Docker Image to Docker Hub.."
