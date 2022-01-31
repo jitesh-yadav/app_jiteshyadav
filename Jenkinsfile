@@ -9,8 +9,10 @@ pipeline {
 
     stages {
         stage('Prepare Environment') {
-            tools {
-                maven 'Maven3'
+            steps {
+                tools {
+                    maven 'Maven3'
+                }
             }
         }
         stage('Checkout code') {
