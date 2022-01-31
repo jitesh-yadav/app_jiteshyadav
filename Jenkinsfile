@@ -1,7 +1,3 @@
-import groovy.transform.Field
-
-@field string artifactId = ''
-
 pipeline {
     agent any
     
