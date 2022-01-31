@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven3'
-    }
-
     options {
         timestamps()
         timeout(time: 1, unit: 'HOURS')
@@ -14,6 +10,9 @@ pipeline {
 
     stages {
         stage('Build') {
+            tools {
+                maven 'Maven3'
+            }
             steps {
                 checkout scm
                 bat 'mvn clean install'
