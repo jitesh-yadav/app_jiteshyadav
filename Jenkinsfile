@@ -1,8 +1,17 @@
+import groovy.transform.Field
+
+@field string artifactId = ''
+
 pipeline {
     agent any
     
     tools {
         maven 'Maven3'
+    }
+
+    environment {
+        mvn = tool name: 'Maven3'
+        username = 'jiteshyadav'
     }
 
     options {
@@ -15,13 +24,24 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo 'Checkout Source Repo..'
                 checkout scm
-                bat 'mvn clean install'
+
+                echo 'Start Build..'
+                bat 'mvn clean verify'
             }
         }
         stage('Sonarqube Analysis') {
             steps {
-                echo 'Analysis pending..'
+                echo 'Start Sonarqube Analysis..'
+                withSonarQubeEnv("SonarQubeScanner") {
+                    bat "${mvn}/bin/mvn sonar:sonar -Dsonar.projectKey=sonar-${username} -Dsonar.projectName=sonar-${username}"
+                }
+
+                // Wait for results and set pipeline status accordingly
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
         stage('Kubernetes Deployment') {
