@@ -8,13 +8,14 @@ pipeline {
     options {
         timestamps()
         timeout(time: 1, unit: 'HOURS')
+        skipDefaultCheckout true
         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '10', numToKeepStr: '5')
     }
 
     stages {
         stage('Build') {
             steps {
-                git url: 'https://github.com/jitesh-yadav/app_jiteshyadav_nagp_devops.git'
+                checkout scm
                 bat 'mvn clean install'
             }
         }
