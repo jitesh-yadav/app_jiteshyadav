@@ -18,20 +18,18 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        stage('Test Case Execution') {
-            when {
-                branch 'master'
-            }
-            steps {
-                bat 'mvn test'
+        if (branch 'master') {
+            stage('Test Case Execution') {
+                steps {
+                    bat 'mvn test'
+                }
             }
         }
-        stage('Sonarqube Analysis') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                echo 'Analysis pending..'
+        if (branch 'develop') {
+            stage('Sonarqube Analysis') {
+                steps {
+                    echo 'Analysis pending..'
+                }
             }
         }
         stage('Kubernetes Deployment') {
