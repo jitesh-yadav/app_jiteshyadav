@@ -18,18 +18,7 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        stage('Test Case Execution') {
-            when {
-                branch 'master'
-            }
-            steps {
-                bat 'mvn test'
-            }
-        }
         stage('Sonarqube Analysis') {
-            when {
-                branch 'develop'
-            }
             steps {
                 echo 'Analysis pending..'
             }
