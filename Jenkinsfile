@@ -16,16 +16,16 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                echo "Checkout Source Repo.."
+                echo "Checking out Source Repo.."
                 checkout scm
 
-                echo "Start Build.."
+                echo "Starting Build.."
                 bat "${mvn}/bin/mvn clean verify"
             }
         }
         stage("Sonarqube Analysis") {
             steps {
-                echo "Start Sonarqube Analysis.."
+                echo "Starting Sonarqube Analysis.."
                 withSonarQubeEnv("Test_Sonar") {
                     bat "${mvn}/bin/mvn sonar:sonar -Dsonar.projectKey=sonar-${username} -Dsonar.projectName=sonar-${username}"
                 }
@@ -39,7 +39,14 @@ pipeline {
         }
         stage("Kubernetes Deployment") {
             steps {
-                echo "Deploy pending.."
+                echo "Building Docker Image.."
+                def imageName = "i-${username}-${BRANCH_NAME}:${BUILD_NUMBER}"
+                bat "docker build -t ${imageName} ."
+
+                echo "Puching Docker Image to Docker Hub.."
+                withDockerRegistry(credentialsId: "DockerHub_Secret", toolName: "docker") {
+                    bat "docker push ${imageName}"
+                }
             }
         }
     }
