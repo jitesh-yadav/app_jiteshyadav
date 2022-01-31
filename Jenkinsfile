@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         mvn = tool name: "Maven3"
-        username = "jiteshyadav"
     }
 
     options {
@@ -20,21 +19,13 @@ pipeline {
                 checkout scm
 
                 echo "Start Build.."
-                bat "${mvn}/bin/mvn clean verify"
+                bat "${mvn}/bin/mvn clean verify -DskipTests"
             }
         }
-        stage("Sonarqube Analysis") {
+        stage("Test Case Execution") {
             steps {
-                echo "Start Sonarqube Analysis.."
-                withSonarQubeEnv("SonarQubeScanner") {
-                    bat "${mvn}/bin/mvn sonar:sonar -Dsonar.projectKey=sonar-${username} -Dsonar.projectName=sonar-${username}"
-                }
-
-                // Wait for results and set pipeline status accordingly
-                echo "Checking Sonar Results.."
-                timeout(time: 5, unit: "MINUTES") {
-                    waitForQualityGate abortPipeline: true
-                }
+                echo "Executing Test Cases.."
+                bat "${mvn}/bin/mvn test"
             }
         }
         stage("Kubernetes Deployment") {
