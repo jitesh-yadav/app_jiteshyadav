@@ -18,14 +18,14 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        if (branch == 'master') {
+        if(branch == 'master') {
             stage('Test Case Execution') {
                 steps {
                     bat 'mvn test'
                 }
             }
         }
-        if (branch == 'develop') {
+        if(branch == 'develop') {
             stage('Sonarqube Analysis') {
                 steps {
                     echo 'Analysis pending..'
