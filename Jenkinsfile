@@ -4,6 +4,7 @@ pipeline {
     environment {
         mvn = tool name: "Maven3"
         username = "jiteshyadav"
+        registry = "jiteshyadav"
     }
 
     options {
@@ -45,10 +46,10 @@ pipeline {
                 echo "Building Docker Image.."
                 bat "docker build -t ${imageName} ."
 
-                echo "Puching Docker Image to Docker Hub.."
+                echo "Pushing Docker Image to Docker Hub.."
                 script {
                     withDockerRegistry(credentialsId: 'dockerhub', toolName: "docker") {
-                        bat "docker push ${imageName}"
+                        bat "docker push ${registry}/${imageName}"
                     }
                 }
             }
