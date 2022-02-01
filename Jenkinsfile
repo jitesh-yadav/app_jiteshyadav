@@ -52,6 +52,9 @@ pipeline {
                         bat "docker push ${registry}/${imageName}"
                     }
                 }
+
+                echo "Deploying To Kubernetes Cluster.."
+                bat "kubectl apply -f k8s/deployment.yaml"
             }
         }
     }
