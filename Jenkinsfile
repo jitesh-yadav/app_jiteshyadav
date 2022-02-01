@@ -46,7 +46,7 @@ pipeline {
                 bat "docker build -t ${imageName} ."
 
                 echo "Puching Docker Image to Docker Hub.."
-                withDockerRegistry(credentialsId: "DockerHub_Secret", toolName: "docker") {
+                withDockerRegistry(credentialsId: "dockerhub", toolName: "docker") {
                     bat "docker push ${imageName}"
                 }
             }
