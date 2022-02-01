@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 echo "Building Docker Image.."
-                bat "docker build -t ${imageName} ."
+                bat "docker build -t ${registry}/${imageName} --no-cache ."
 
                 echo "Pushing Docker Image to Docker Hub.."
                 script {
