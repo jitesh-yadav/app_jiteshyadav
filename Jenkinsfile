@@ -40,7 +40,7 @@ pipeline {
         }
         stage("Kubernetes Deployment") {
             environment {
-                imageName = "i-${username}-${BRANCH_NAME}:${BUILD_NUMBER}"
+                imageName = "i-${username}-${BRANCH_NAME}:latest"
             }
             steps {
                 echo "Building Docker Image.."
