@@ -20,8 +20,6 @@ spec:
         image: jiteshyadav/i-jiteshyadav-develop:latest
         ports:
         - containerPort: 80
-    secrets:
-    - name: default-token-q5d59
 ---
 apiVersion: v1
 kind: Service
