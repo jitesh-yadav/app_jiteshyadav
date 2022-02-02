@@ -45,7 +45,9 @@ pipeline {
         stage("Build Docker Image") {
             steps {
                 echo "Building Docker Image.."
-                env.imageName = "${registry}/i-${username}-${BRANCH_NAME}:latest"
+                script {
+                    env.imageName = "${registry}/i-${username}-${BRANCH_NAME}:latest"
+                }
 
                 bat "docker build -t ${env.imageName} --no-cache ."
             }
