@@ -43,18 +43,22 @@ pipeline {
         }
 
         stage("Build Docker Image") {
-            echo "Building Docker Image.."
-            env.imageName = "${registry}/i-${username}-${BRANCH_NAME}:latest"
+            steps {
+                echo "Building Docker Image.."
+                env.imageName = "${registry}/i-${username}-${BRANCH_NAME}:latest"
 
-            bat "docker build -t ${env.imageName} --no-cache ."
+                bat "docker build -t ${env.imageName} --no-cache ."
+            }
         }
 
         stage("Push Image To DockerHub") {
-            echo "Pushing Docker Image to Docker Hub.."
+            steps {
+                echo "Pushing Docker Image to Docker Hub.."
 
-            script {
-                withDockerRegistry(credentialsId: 'dockerhub', toolName: "docker") {
-                    bat "docker push ${env.imageName}"
+                script {
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: "docker") {
+                        bat "docker push ${env.imageName}"
+                    }
                 }
             }
         }
