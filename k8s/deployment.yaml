@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: app-jiteshyadav-pod
-        image: jiteshyadav/i-jiteshyadav-develop:latest
+        image: imageName
         ports:
         - containerPort: 80
         envFrom:
