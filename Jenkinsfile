@@ -68,7 +68,8 @@ pipeline {
         stage("Kubernetes Deployment") {
             steps {
                 // Replace newly created image name in deployment.yaml file
-                bat "sed -i 's|imageName|${env.imageName}|' k8s/deployment.yaml"
+                bat "(Get-Content -path k8s/deployment.yaml) -replace 'imageName',${env.imageName} | Set-Content -path k8s/deployment.yaml"
+
                 echo "Deploying To Kubernetes Cluster.."
                 bat "kubectl apply -f k8s/deployment.yaml"
             }
