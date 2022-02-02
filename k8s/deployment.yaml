@@ -17,9 +17,14 @@ spec:
     spec:
       containers:
       - name: app-jiteshyadav-pod
-        image: imageName
+        image: jiteshyadav/i-jiteshyadav-develop:latest
         ports:
         - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: test-config-vars
+        - secretRef:
+            name: test-config-secrets
 ---
 apiVersion: v1
 kind: Service
