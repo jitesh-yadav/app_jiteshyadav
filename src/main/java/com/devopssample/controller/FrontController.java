@@ -13,7 +13,14 @@ public class FrontController{
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView getHomeView(HttpServletRequest request) {
-		System.out.println("Welcome");
+		System.out.println("This");
+		System.out.println("is");
+		System.out.println("a");
+		System.out.println("change");
+		System.out.println("to");
+		System.out.println("fail");
+		System.out.println("the");
+		System.out.println("pipeline");
 		ModelAndView model = new ModelAndView("home");
 		return model;
 	}
